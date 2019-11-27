@@ -1,0 +1,137 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-15 11:02+0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: dummy/serializers.py:15
+msgid "Invalid invoice identifier."
+msgstr ""
+
+#: errors.py:12
+msgid "Invoice has expired."
+msgstr ""
+
+#: errors.py:18
+msgid "Invoice has already been paid."
+msgstr ""
+
+#: errors.py:24
+msgid "Can not perform action with order current state."
+msgstr ""
+
+#: errors.py:30
+msgid "Invalid money amount."
+msgstr ""
+
+#: errors.py:36
+msgid "Insufficient money amount."
+msgstr ""
+
+#: models.py:37
+msgid "total"
+msgstr ""
+
+#: models.py:38
+msgid "captured total"
+msgstr ""
+
+#: models.py:39
+msgid "expires at"
+msgstr ""
+
+#: models.py:41 models.py:64 models.py:81
+msgid "transaction"
+msgstr ""
+
+#: models.py:42
+msgid "success callback"
+msgstr ""
+
+#: models.py:43
+msgid "fail callback"
+msgstr ""
+
+#: models.py:44 models.py:59
+msgid "status"
+msgstr ""
+
+#: models.py:45 models.py:60
+msgid "created at"
+msgstr ""
+
+#: models.py:46 models.py:61 models.py:72 models.py:84
+msgid "modified at"
+msgstr ""
+
+#: models.py:47 models.py:73 models.py:85
+msgid "details"
+msgstr ""
+
+#: models.py:50 models.py:56 models.py:69
+msgid "invoice"
+msgstr ""
+
+#: models.py:51
+msgid "invoices"
+msgstr ""
+
+#: models.py:57
+msgid "money amount"
+msgstr ""
+
+#: models.py:58
+msgid "type"
+msgstr ""
+
+#: models.py:65
+msgid "transactions"
+msgstr ""
+
+#: models.py:70 models.py:82
+msgid "from status"
+msgstr ""
+
+#: models.py:71 models.py:83
+msgid "to status"
+msgstr ""
+
+#: models.py:76
+msgid "invoice status change"
+msgstr ""
+
+#: models.py:77
+msgid "invoice status changes"
+msgstr ""
+
+#: models.py:88
+msgid "transaction status change"
+msgstr ""
+
+#: models.py:89
+msgid "transaction status changes"
+msgstr ""
+
+#: walletone/models.py:31
+msgid "walletone transaction"
+msgstr ""
+
+#: walletone/models.py:32
+msgid "walletone transactions"
+msgstr ""
