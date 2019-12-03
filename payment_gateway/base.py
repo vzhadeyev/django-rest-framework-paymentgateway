@@ -79,20 +79,26 @@ class AbstractPaymentProvider(object):
 class BasicCallbackProvider(AbstractCallbackProvider):
 
     def success(self, invoice, *args, **kwargs):
-        logger.info('success {}'.format(invoice.pk))  # TODO: logging
+        logger.info('Calling success callback for invoice.', extra={'invoice_id': invoice.pk,
+                                                                    'callback': invoice.success_callback})
         mod_name, func_name = invoice.success_callback.rsplit('.', 1)
         mod = importlib.import_module(mod_name)
         func = getattr(mod, func_name)
         func(invoice.id)
+        logger.info('Executed success callback for invoice', extra={'invoice_id': invoice.pk,
+                                                                    'callback': invoice.success_callback})
         return invoice
 
     def fail(self, invoice, *args, **kwargs):
-        logger.info('fail {}'.format(invoice.pk))  # TODO: logging
+        logger.info('Calling fail callback for invoice.', extra={'invoice_id': invoice.pk,
+                                                                 'callback': invoice.fail_callback})
         if invoice.fail_callback is not None:
             mod_name, func_name = invoice.fail_callback.rsplit('.', 1)
             mod = importlib.import_module(mod_name)
             func = getattr(mod, func_name)
             func(invoice.id)
+            logger.info('Executed fail callback for invoice.', extra={'invoice_id': invoice.pk,
+                                                                      'callback': invoice.fail_callback})
         return invoice
 
 

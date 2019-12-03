@@ -31,10 +31,10 @@ class InvoiceAdmin(admin.ModelAdmin):
 class TransactionStatusChangeInline(admin.TabularInline):
     model = TransactionStatusChange
     extra = 0
-    show_change_link = True
     can_delete = False
-    fields = ('created_at', 'from_status', 'to_status', 'details')
-    readonly_fields = ('from_status', 'to_status', 'details', 'created_at')
+    show_change_link = True
+    fields = ('id', 'created_at', 'from_status', 'to_status', 'details')
+    readonly_fields = ('details', 'created_at')
 
 
 class WalletOneTransactionAdmin(admin.ModelAdmin):
@@ -48,6 +48,7 @@ class WalletOneTransactionInline(admin.TabularInline):
     extra = 0
     can_delete = False
     show_change_link = True
+    raw_id_fields = ('invoice',)
 
 
 class TransactionAdmin(admin.ModelAdmin):
