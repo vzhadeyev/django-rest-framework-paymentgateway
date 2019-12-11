@@ -20,6 +20,7 @@ setup(
     author_email='vzhadeyev@gmail.com',
     packages=find_packages(exclude=['tests', 'tests.*', 'licenses', 'requirements']),
     include_package_data=True,
+    package_data={'payment_gateway': ['locale/*/LC_MESSAGES/*.po', 'locale/*/LC_MESSAGES/*.mo']},
     install_requires=[
         'django',
         'djangorestframework',
