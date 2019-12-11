@@ -40,7 +40,7 @@ class TransactionStatusChangeInline(admin.TabularInline):
 class WalletOneTransactionAdmin(admin.ModelAdmin):
     list_display = ('id', 'transaction',)
     list_per_page = 30
-    raw_id_fields = ('transaction',)
+    raw_id_fields = ('transaction', 'invoice')
 
 
 class WalletOneTransactionInline(admin.TabularInline):
