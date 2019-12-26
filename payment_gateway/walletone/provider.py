@@ -76,11 +76,12 @@ class WalletOnePaymentProvider(WalletOneSignEncoder, AbstractPaymentProvider):
         return 'BASE64:%s' % b64encode(desc.encode('utf-8')).decode()
 
     def make_signed_invoice(self, invoice: Invoice) -> list:
+        overridden_data = invoice.details.get('WALLET_ONE_OVERRIDE', {})
         data = [('WMI_MERCHANT_ID', api_settings.WALLETONE_MERCHANT_ID),
                 ('WMI_CURRENCY_ID', api_settings.WALLETONE_CURRENCY_ID),
                 ('WMI_DESCRIPTION', self.get_encoded_description(invoice)),
-                ('WMI_SUCCESS_URL', api_settings.WALLETONE_SUCCESS_URL),
-                ('WMI_FAIL_URL', api_settings.WALLETONE_FAIL_URL),
+                ('WMI_SUCCESS_URL', overridden_data.get('WMI_SUCCESS_URL', api_settings.WALLETONE_SUCCESS_URL)),
+                ('WMI_FAIL_URL', overridden_data.get('WMI_FAIL_URL', api_settings.WALLETONE_FAIL_URL)),
                 ('WMI_PAYMENT_AMOUNT', str(invoice.total)),
                 ('WMI_PAYMENT_NO', str(invoice.id)),
                 ('WMI_EXPIRED_DATE', invoice.expires_at.replace(microsecond=0).replace(tzinfo=None).isoformat())]
@@ -99,7 +100,8 @@ class WalletOnePaymentProvider(WalletOneSignEncoder, AbstractPaymentProvider):
             wt.WMI_LAST_NOTIFY_DATE = transaction_data.WMI_LAST_NOTIFY_DATE
             wt.WMI_INVOICE_OPERATIONS = transaction_data.WMI_INVOICE_OPERATIONS
             wt.money_amount = transaction_data.money_amount
-            wt.save(update_fields=['WMI_NOTIFY_COUNT', 'WMI_LAST_NOTIFY_DATE', 'WMI_INVOICE_OPERATIONS', 'money_amount'])
+            wt.save(
+                update_fields=['WMI_NOTIFY_COUNT', 'WMI_LAST_NOTIFY_DATE', 'WMI_INVOICE_OPERATIONS', 'money_amount'])
             transaction = wt.transaction
         else:
             transaction = self.transaction_handler.create(transaction_data)
