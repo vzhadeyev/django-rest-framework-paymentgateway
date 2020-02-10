@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: Vyacheslav Zhadeyev <vzhadeyev@gmail.com>\n"
-"POT-Creation-Date: 2019-12-11 05:13+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-10 18:39+0600\n"
 "PO-Revision-Date: 2019-12-11 05:13+0000\n"
 "Last-Translator: Vyacheslav Zhadeyev <vzhadeyev@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,136 +20,139 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: django-rest-framework-paymentgateway/payment_gateway/dummy/serializers.py:15
+#: payment_gateway/dummy/serializers.py:16
 msgid "Invalid invoice identifier."
 msgstr "Неверный идентификатор счёта на оплату."
 
-#: django-rest-framework-paymentgateway/payment_gateway/errors.py:12
+#: payment_gateway/errors.py:12
 msgid "Invoice has expired."
 msgstr "Счёт на оплату истёк."
 
-#: django-rest-framework-paymentgateway/payment_gateway/errors.py:18
+#: payment_gateway/errors.py:18
 msgid "Invoice has already been paid."
 msgstr "Счёт уже был оплачен."
 
-#: django-rest-framework-paymentgateway/payment_gateway/errors.py:24
+#: payment_gateway/errors.py:24
 msgid "Can not perform action with order current state."
 msgstr "Невозможно выполнить действие с текущим состоянием счёта."
 
-#: django-rest-framework-paymentgateway/payment_gateway/errors.py:30
+#: payment_gateway/errors.py:30
 msgid "Invalid money amount."
 msgstr "Неверная сумма."
 
-#: django-rest-framework-paymentgateway/payment_gateway/errors.py:36
+#: payment_gateway/errors.py:36
+msgid "Invalid currency."
+msgstr "Неверная валюта."
+
+#: payment_gateway/errors.py:42
 msgid "Insufficient money amount."
 msgstr "Недостаточная сумма."
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:37
+#: payment_gateway/models.py:38
 msgid "total"
 msgstr "сумма"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:38
+#: payment_gateway/models.py:39
 msgid "captured total"
 msgstr "полученная сумма"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:39
+#: payment_gateway/models.py:40
 msgid "expires at"
 msgstr "истекает"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:41
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:64
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:81
+#: payment_gateway/models.py:42 payment_gateway/models.py:65
+#: payment_gateway/models.py:83
 msgid "transaction"
 msgstr "транзакция"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:42
+#: payment_gateway/models.py:43
 msgid "success callback"
 msgstr ""
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:43
+#: payment_gateway/models.py:44
 msgid "fail callback"
 msgstr ""
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:44
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:59
+#: payment_gateway/models.py:45 payment_gateway/models.py:60
 msgid "status"
 msgstr "статус"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:45
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:60
+#: payment_gateway/models.py:46 payment_gateway/models.py:61
 msgid "created at"
 msgstr "создан"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:46
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:61
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:72
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:84
+#: payment_gateway/models.py:47 payment_gateway/models.py:62
+#: payment_gateway/models.py:73 payment_gateway/models.py:86
 msgid "modified at"
 msgstr "изменён"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:47
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:73
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:85
+#: payment_gateway/models.py:48 payment_gateway/models.py:74
+#: payment_gateway/models.py:87
 msgid "details"
 msgstr "детали"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:50
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:56
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:69
+#: payment_gateway/models.py:51 payment_gateway/models.py:57
+#: payment_gateway/models.py:70
 msgid "invoice"
 msgstr "счёт на оплату"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:51
+#: payment_gateway/models.py:52
 msgid "invoices"
-msgstr "счёта на оплату"
+msgstr "счета на оплату"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:57
+#: payment_gateway/models.py:58
 msgid "money amount"
 msgstr "сумма"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:58
+#: payment_gateway/models.py:59
 msgid "type"
 msgstr "тип"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:65
+#: payment_gateway/models.py:66
 msgid "transactions"
 msgstr "транзакции"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:70
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:82
+#: payment_gateway/models.py:71 payment_gateway/models.py:84
 msgid "from status"
 msgstr "старый статус"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:71
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:83
+#: payment_gateway/models.py:72 payment_gateway/models.py:85
 msgid "to status"
 msgstr "новый статус"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:76
+#: payment_gateway/models.py:77
 msgid "invoice status change"
 msgstr "изменение статуса счёта на оплату"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:77
+#: payment_gateway/models.py:78
 msgid "invoice status changes"
 msgstr "изменения статуса счёта на оплату"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:88
+#: payment_gateway/models.py:90
 msgid "transaction status change"
 msgstr "изменение статуса транзакций"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:89
+#: payment_gateway/models.py:91
 msgid "transaction status changes"
 msgstr "изменения статуса транзакций"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:116
+#: payment_gateway/models.py:118
 msgid "walletone transaction"
 msgstr "транзакция WalletOne"
 
-#: django-rest-framework-paymentgateway/payment_gateway/models.py:117
+#: payment_gateway/models.py:119
 msgid "walletone transactions"
 msgstr "транзакции WalletOne"
 
-#: django-rest-framework-paymentgateway/payment_gateway/walletone/provider.py:73
+#: payment_gateway/models.py:156
+msgid "cloudpayments transaction"
+msgstr "транзакция СloudPayments"
+
+#: payment_gateway/models.py:157
+msgid "cloudpayments transactions"
+msgstr "транзакции СloudPayments"
+
+#: payment_gateway/walletone/provider.py:73
 msgid "Purchase payment"
 msgstr "Оплата покупки"
 
@@ -185,3 +188,6 @@ msgstr "Dummy"
 
 msgid "WALLETONE"
 msgstr "WalletOne"
+
+msgid "CLOUDPAYMENTS"
+msgstr "CloudPayments"

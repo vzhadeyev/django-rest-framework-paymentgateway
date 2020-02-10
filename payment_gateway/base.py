@@ -19,7 +19,7 @@ class AbstractPaymentHandler(object):
     def try_process_payment(self, invoice: Invoice, transaction: Transaction) -> Invoice:
         raise NotImplementedError
 
-    def handle_payment_error(self, error: PaymentError, invoice: Invoice, transaction: Transaction):
+    def handle_payment_error(self, error: PaymentError, invoice: Invoice, transaction: Transaction, raise_exc: bool):
         raise NotImplementedError
 
     def validate_payment(self, invoice: Invoice, transaction: Transaction, raise_exc: bool) -> bool:
@@ -54,6 +54,9 @@ class AbstractTransactionHandler(object):
     def set_error(self, transaction: Transaction):
         raise NotImplementedError
 
+    def set_declined(self, transaction: Transaction):
+        raise NotImplementedError
+
     def update_transaction_status(self, transaction: Transaction, status: TransactionStatus):
         raise NotImplementedError
 
@@ -72,7 +75,7 @@ class AbstractPaymentProvider(object):
         self.payment_handler = payment_handler
         self.transaction_handler = transaction_handler
 
-    def try_pay(self, invoice_id: int, transaction_data: object) -> (Invoice, Transaction):
+    def pay(self, invoice_id: int, transaction_data: object) -> (Invoice, Transaction):
         raise NotImplementedError
 
 
@@ -123,6 +126,9 @@ class BasicTransactionHandler(AbstractTransactionHandler):
     def set_error(self, transaction: Transaction):
         return self.update_transaction_status(transaction, TransactionStatus.ERROR)
 
+    def set_declined(self, transaction: Transaction):
+        return self.update_transaction_status(transaction, TransactionStatus.DECLINED)
+
     @db_transaction.atomic()
     def update_transaction_status(self, transaction: Transaction, status: TransactionStatus) -> Transaction:
         prev_status = transaction.status
@@ -149,14 +155,19 @@ class BasicPaymentHandler(AbstractPaymentHandler):
         invoice = self.make_invoice_success(invoice, transaction)
         return self.on_success(invoice)
 
-    def handle_payment_error(self, error: PaymentError, invoice: Invoice, transaction: Transaction):
+    def handle_payment_error(self, error: PaymentError, invoice: Invoice, transaction: Transaction,
+                             raise_exc: bool = False):
         if isinstance(error, (InvalidMoneyAmount, InsufficientMoneyAmount)):
             self.transaction_handler.set_invalid_money_amount(transaction)
         elif isinstance(error, InvoiceExpired):
             self.make_invoice_expired(invoice, transaction)
+        elif isinstance(error, InvoiceInvalidStatus):
+            self.transaction_handler.set_declined(transaction)
         else:
             self.transaction_handler.set_error(transaction)
-        raise error
+        if raise_exc:
+            raise error
+        return invoice, transaction
 
     def set_invoice_status(self, invoice: Invoice, status: InvoiceStatus) -> (Invoice, InvoiceStatus):
         old_status = invoice.status

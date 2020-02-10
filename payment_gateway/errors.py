@@ -31,6 +31,12 @@ class InvalidMoneyAmount(PaymentError):
     default_code = 'invalid_money_amount'
 
 
+class InvalidCurrency(InvalidMoneyAmount):
+    status_code = status.HTTP_400_BAD_REQUEST
+    default_detail = _('Invalid currency.')
+    default_code = 'invalid_currency'
+
+
 class InsufficientMoneyAmount(InvalidMoneyAmount):
     status_code = status.HTTP_400_BAD_REQUEST
     default_detail = _('Insufficient money amount.')

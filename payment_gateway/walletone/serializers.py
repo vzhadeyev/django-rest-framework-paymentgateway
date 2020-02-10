@@ -77,4 +77,4 @@ class WalletOneConfirmSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         data = WalletOneTransactionDTO(type=TransactionType.WALLETONE, invoice_id=validated_data['WMI_PAYMENT_NO'],
                                        money_amount=validated_data['WMI_PAYMENT_AMOUNT'], **validated_data)
-        return self.provider.try_pay(data.invoice_id, data)
+        return self.provider.pay(data.invoice_id, data)

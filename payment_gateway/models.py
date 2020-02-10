@@ -31,6 +31,7 @@ class TransactionStatus(int, ModelChoice):
 class TransactionType(int, ModelChoice):
     DUMMY = 0
     WALLETONE = 1
+    CLOUDPAYMENTS = 2
 
 
 class Invoice(models.Model):
@@ -78,7 +79,8 @@ class InvoiceStatusChange(models.Model):
 
 
 class TransactionStatusChange(models.Model):
-    transaction = models.ForeignKey('payment_gateway.Transaction', on_delete=models.CASCADE, verbose_name=_('transaction'))
+    transaction = models.ForeignKey('payment_gateway.Transaction', on_delete=models.CASCADE,
+                                    verbose_name=_('transaction'))
     from_status = models.PositiveSmallIntegerField(_('from status'), choices=TransactionStatus.choices())
     to_status = models.PositiveSmallIntegerField(_('to status'), choices=TransactionStatus.choices())
     created_at = models.DateTimeField(_('modified at'), auto_now_add=True)
@@ -115,3 +117,41 @@ class WalletOneTransaction(Transaction):
     class Meta:
         verbose_name = _('walletone transaction')
         verbose_name_plural = _('walletone transactions')
+
+
+class CloudPaymentsTransaction(Transaction):
+    transaction = models.OneToOneField('payment_gateway.Transaction', on_delete=models.CASCADE, parent_link=True)
+
+    TransactionId = models.IntegerField(db_index=True)
+    Amount = models.DecimalField(max_digits=11, decimal_places=2)
+    Currency = models.CharField(max_length=3)
+    DateTime = models.DateTimeField()
+    CardFirstSix = models.CharField(max_length=6)
+    CardLastFour = models.CharField(max_length=4)
+    CardType = models.CharField(max_length=5)
+    CardExpDate = models.CharField(max_length=6)
+    TestMode = models.BooleanField()
+    Status = models.CharField(max_length=32)
+    OperationType = models.CharField(max_length=16)
+    AccountId = models.CharField(null=True, blank=True, max_length=64)
+    SubscriptionId = models.CharField(null=True, blank=True, max_length=64)
+    TokenRecipient = models.CharField(null=True, blank=True, max_length=128)
+    Name = models.CharField(null=True, blank=True, max_length=256)
+    Email = models.EmailField(null=True, blank=True)
+    IpAddress = models.GenericIPAddressField(null=True, blank=True)
+    IpCountry = models.CharField(null=True, blank=True, max_length=2)
+    IpCity = models.CharField(null=True, blank=True, max_length=128)
+    IpRegion = models.CharField(null=True, blank=True, max_length=128)
+    IpDistrict = models.CharField(null=True, blank=True, max_length=128)
+    Issuer = models.CharField(null=True, blank=True, max_length=128)
+    IssuerBankCountry = models.CharField(null=True, blank=True, max_length=2)
+    Description = models.TextField(null=True, blank=True)
+    Data = JSONField(null=True, blank=True)
+
+    GatewayName = models.CharField(null=True, blank=True, max_length=128)
+    Token = models.CharField(null=True, blank=True, max_length=128)
+    TotalFee = models.DecimalField(null=True, blank=True, max_digits=11, decimal_places=2)
+
+    class Meta:
+        verbose_name = _('cloudpayments transaction')
+        verbose_name_plural = _('cloudpayments transactions')

@@ -88,7 +88,7 @@ class WalletOnePaymentProvider(WalletOneSignEncoder, AbstractPaymentProvider):
         data.append(('WMI_SIGNATURE', self._get_signature(data).decode()))
         return data
 
-    def try_pay(self, invoice_id: int, transaction_data: WalletOneTransactionDTO) -> (Invoice, Transaction):
+    def pay(self, invoice_id: int, transaction_data: WalletOneTransactionDTO) -> (Invoice, Transaction):
         invoice_id = transaction_data.WMI_PAYMENT_NO
         logger.info('Processing WalletOne payment.',
                     extra={'invoice_id': invoice_id, 'WMI_ORDER_ID': transaction_data.WMI_ORDER_ID})
@@ -107,8 +107,9 @@ class WalletOnePaymentProvider(WalletOneSignEncoder, AbstractPaymentProvider):
             transaction = self.transaction_handler.create(transaction_data)
         error_message = 'WMI_RESULT=RETRY&WMI_DESCRIPTION=WMI_PAYMENT_NO error'
         try:
-            try:
-                with db_transaction.atomic():
+            validation_error = None
+            with db_transaction.atomic():
+                try:
                     invoice = Invoice.objects.select_for_update().get(id=invoice_id)
                     if invoice.status == InvoiceStatus.PAID and transaction.id == invoice.success_transaction_id:
                         logger.info('WalletOne payment was already made returning old result.',
@@ -119,8 +120,11 @@ class WalletOnePaymentProvider(WalletOneSignEncoder, AbstractPaymentProvider):
                                 extra={'invoice_id': invoice_id, 'transaction_id': transaction.id,
                                        'WMI_ORDER_ID': transaction_data.WMI_ORDER_ID})
                     return invoice, transaction
-            except PaymentError as e:
-                self.payment_handler.handle_payment_error(e, invoice, transaction)
+                except PaymentError as e:
+                    self.payment_handler.handle_payment_error(e, invoice, transaction, raise_exc=False)
+                    validation_error = e
+            if validation_error is not None:
+                raise validation_error
         except (Invoice.DoesNotExist, IntegrityError):
             error_message = 'WMI_RESULT=RETRY&WMI_DESCRIPTION=WMI_PAYMENT_NO error'
         except InvalidMoneyAmount:

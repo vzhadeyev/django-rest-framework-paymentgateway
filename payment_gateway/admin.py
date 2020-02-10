@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Invoice, InvoiceStatusChange, Transaction, TransactionStatusChange, WalletOneTransaction
+from .models import Invoice, InvoiceStatusChange, Transaction, TransactionStatusChange, WalletOneTransaction, \
+    CloudPaymentsTransaction
 
 
 class InvoiceStatusChangeInline(admin.TabularInline):
@@ -38,12 +39,12 @@ class TransactionStatusChangeInline(admin.TabularInline):
 
 
 class WalletOneTransactionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'transaction',)
+    list_display = ('id', 'invoice', 'money_amount', 'status', 'created_at', 'modified_at')
     list_per_page = 30
     raw_id_fields = ('transaction', 'invoice')
 
 
-class WalletOneTransactionInline(admin.TabularInline):
+class WalletOneTransactionInline(admin.StackedInline):
     model = WalletOneTransaction
     extra = 0
     can_delete = False
@@ -51,8 +52,22 @@ class WalletOneTransactionInline(admin.TabularInline):
     raw_id_fields = ('invoice',)
 
 
+class CloudPaymentsTransactionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'invoice', 'money_amount', 'status', 'created_at', 'modified_at')
+    list_per_page = 30
+    raw_id_fields = ('transaction', 'invoice')
+
+
+class CloudPaymentsTransactionInline(admin.StackedInline):
+    model = CloudPaymentsTransaction
+    extra = 0
+    can_delete = False
+    show_change_link = True
+    raw_id_fields = ('invoice',)
+
+
 class TransactionAdmin(admin.ModelAdmin):
-    inlines = (TransactionStatusChangeInline, WalletOneTransactionInline)
+    inlines = (TransactionStatusChangeInline, WalletOneTransactionInline, CloudPaymentsTransactionInline)
     list_display = ('id', 'invoice', 'money_amount', 'type', 'status', 'created_at', 'modified_at')
     list_per_page = 30
     raw_id_fields = ('invoice',)
@@ -62,3 +77,4 @@ class TransactionAdmin(admin.ModelAdmin):
 admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(Transaction, TransactionAdmin)
 admin.site.register(WalletOneTransaction, WalletOneTransactionAdmin)
+admin.site.register(CloudPaymentsTransaction, CloudPaymentsTransactionAdmin)
