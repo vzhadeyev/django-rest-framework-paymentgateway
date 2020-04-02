@@ -128,7 +128,7 @@ class CloudPaymentsTransaction(Transaction):
     DateTime = models.DateTimeField()
     CardFirstSix = models.CharField(max_length=6)
     CardLastFour = models.CharField(max_length=4)
-    CardType = models.CharField(max_length=5)
+    CardType = models.CharField(max_length=32)
     CardExpDate = models.CharField(max_length=6)
     TestMode = models.BooleanField()
     Status = models.CharField(max_length=32)
